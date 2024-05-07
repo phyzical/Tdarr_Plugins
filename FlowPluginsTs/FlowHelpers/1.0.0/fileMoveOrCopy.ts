@@ -203,6 +203,14 @@ const fileMoveOrCopy = async ({
     destinationPath: string,
     args: IpluginInputArgs,
 }):Promise<boolean> => {
+  if (operation === 'move') {
+    // add logic to check if a previous move worked i.e theres a .tmp still for processing
+    if (await getSizeBytes(destinationPath) > 0) {
+      args.jobLog('Found a previous .tmp file, skipping move/copy');
+      return true;
+    }
+  }
+
   args.jobLog('Calculating cache file size in bytes');
 
   const sourceFileSize = await getSizeBytes(sourcePath);
@@ -269,12 +277,6 @@ const fileMoveOrCopy = async ({
     }
 
     return true;
-  }
-
-  if (operation === 'move') {
-    // add logic to check if a previous move worked i.e theres a .tmp still for processing
-    if (await getSizeBytes(destinationPath) > 0)
-      return true;
   }
 
   throw new Error(`Failed to ${operation} file`);

@@ -244,19 +244,29 @@ var fileMoveOrCopy = function (_a) { return __awaiter(void 0, [_a], void 0, func
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
+                if (!(operation === 'move')) return [3 /*break*/, 2];
+                return [4 /*yield*/, getSizeBytes(destinationPath)];
+            case 1:
+                // add logic to check if a previous move worked i.e theres a .tmp still for processing
+                if ((_c.sent()) > 0) {
+                    args.jobLog('Found a previous .tmp file, skipping move/copy');
+                    return [2 /*return*/, true];
+                }
+                _c.label = 2;
+            case 2:
                 args.jobLog('Calculating cache file size in bytes');
                 return [4 /*yield*/, getSizeBytes(sourcePath)];
-            case 1:
+            case 3:
                 sourceFileSize = _c.sent();
                 args.jobLog("".concat(sourceFileSize));
-                if (!(operation === 'move')) return [3 /*break*/, 3];
+                if (!(operation === 'move')) return [3 /*break*/, 5];
                 return [4 /*yield*/, tryMove({
                         sourcePath: sourcePath,
                         destinationPath: destinationPath,
                         args: args,
                         sourceFileSize: sourceFileSize,
                     })];
-            case 2:
+            case 4:
                 moved = _c.sent();
                 if (moved) {
                     return [2 /*return*/, true];
@@ -272,51 +282,43 @@ var fileMoveOrCopy = function (_a) { return __awaiter(void 0, [_a], void 0, func
                 //   return true;
                 // }
                 args.jobLog('Failed to move file, trying copy');
-                _c.label = 3;
-            case 3: return [4 /*yield*/, tyNcp({
+                _c.label = 5;
+            case 5: return [4 /*yield*/, tyNcp({
                     sourcePath: sourcePath,
                     destinationPath: destinationPath,
                     args: args,
                     sourceFileSize: sourceFileSize,
                 })];
-            case 4:
+            case 6:
                 ncpd = _c.sent();
-                if (!ncpd) return [3 /*break*/, 7];
-                if (!(operation === 'move')) return [3 /*break*/, 6];
+                if (!ncpd) return [3 /*break*/, 9];
+                if (!(operation === 'move')) return [3 /*break*/, 8];
                 return [4 /*yield*/, cleanSourceFile({
                         args: args,
                         sourcePath: sourcePath,
                     })];
-            case 5:
+            case 7:
                 _c.sent();
-                _c.label = 6;
-            case 6: return [2 /*return*/, true];
-            case 7: return [4 /*yield*/, tryNormalCopy({
+                _c.label = 8;
+            case 8: return [2 /*return*/, true];
+            case 9: return [4 /*yield*/, tryNormalCopy({
                     sourcePath: sourcePath,
                     destinationPath: destinationPath,
                     args: args,
                     sourceFileSize: sourceFileSize,
                 })];
-            case 8:
+            case 10:
                 copied = _c.sent();
-                if (!copied) return [3 /*break*/, 11];
-                if (!(operation === 'move')) return [3 /*break*/, 10];
+                if (!copied) return [3 /*break*/, 13];
+                if (!(operation === 'move')) return [3 /*break*/, 12];
                 return [4 /*yield*/, cleanSourceFile({
                         args: args,
                         sourcePath: sourcePath,
                     })];
-            case 9:
-                _c.sent();
-                _c.label = 10;
-            case 10: return [2 /*return*/, true];
             case 11:
-                if (!(operation === 'move')) return [3 /*break*/, 13];
-                return [4 /*yield*/, getSizeBytes(destinationPath)];
-            case 12:
-                // add logic to check if a previous move worked i.e theres a .tmp still for processing
-                if ((_c.sent()) > 0)
-                    return [2 /*return*/, true];
-                _c.label = 13;
+                _c.sent();
+                _c.label = 12;
+            case 12: return [2 /*return*/, true];
             case 13: throw new Error("Failed to ".concat(operation, " file"));
         }
     });
