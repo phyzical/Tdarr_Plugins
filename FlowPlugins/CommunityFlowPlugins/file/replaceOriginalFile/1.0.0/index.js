@@ -40,7 +40,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.plugin = exports.details = void 0;
-var child_process_1 = require("child_process");
 var fileMoveOrCopy_1 = __importDefault(require("../../../../FlowHelpers/1.0.0/fileMoveOrCopy"));
 var fileUtils_1 = require("../../../../FlowHelpers/1.0.0/fileUtils");
 /* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] */
@@ -111,20 +110,7 @@ var plugin = function (args) { return __awaiter(void 0, void 0, void 0, function
                 if (fs.existsSync(args.originalLibraryFile._id)
                     && args.originalLibraryFile._id !== currentPath) {
                     args.jobLog("Deleting original file: ".concat(args.originalLibraryFile._id));
-                    try {
-                        fs.unlinkSync(args.originalLibraryFile._id);
-                    }
-                    catch (e) {
-                        (0, child_process_1.exec)("del ".concat(args.originalLibraryFile._id), function (err) {
-                            if (err) {
-                                args.jobLog('There was an error:');
-                                throw err;
-                            }
-                            else {
-                                args.jobLog('File was deleted successfully');
-                            }
-                        });
-                    }
+                    fs.unlinkSync(args.originalLibraryFile._id);
                 }
                 return [4 /*yield*/, new Promise(function (resolve) { return setTimeout(resolve, 2000); })];
             case 3:

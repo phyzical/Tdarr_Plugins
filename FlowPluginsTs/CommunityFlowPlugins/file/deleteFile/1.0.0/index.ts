@@ -5,8 +5,6 @@ import {
   IpluginOutputArgs,
 } from '../../../../FlowHelpers/1.0.0/interfaces/interfaces';
 import { getFileAbosluteDir } from '../../../../FlowHelpers/1.0.0/fileUtils';
-import { exec } from 'child_process';
-import os from 'os';
 
 /* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] */
 const details = (): IpluginDetails => ({
@@ -69,17 +67,7 @@ const plugin = async (args: IpluginInputArgs): Promise<IpluginOutputArgs> => {
     await fs.unlink(args.inputFileObj._id);
   } else if (fileToDelete === 'originalFile') {
     args.jobLog(`Deleting original file ${args.originalLibraryFile._id}`);
-    await fs.unlink(args.originalLibraryFile._id).catch(err => {
-      args.jobLog('falling back');
-      exec(`del ${args.originalLibraryFile._id}`, (err) => {
-        if (err) {
-          args.jobLog('There was an error:');
-          throw err
-        } else {
-            args.jobLog('File was deleted successfully');
-        }
-      });
-    })
+    await fs.unlink(args.originalLibraryFile._id);
   }
 
   const fileDir = getFileAbosluteDir(args.originalLibraryFile._id);

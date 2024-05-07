@@ -39,7 +39,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.plugin = exports.details = void 0;
 var fs_1 = require("fs");
 var fileUtils_1 = require("../../../../FlowHelpers/1.0.0/fileUtils");
-var child_process_1 = require("child_process");
 /* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] */
 var details = function () { return ({
     name: 'Delete File',
@@ -107,18 +106,7 @@ var plugin = function (args) { return __awaiter(void 0, void 0, void 0, function
             case 2:
                 if (!(fileToDelete === 'originalFile')) return [3 /*break*/, 4];
                 args.jobLog("Deleting original file ".concat(args.originalLibraryFile._id));
-                return [4 /*yield*/, fs_1.promises.unlink(args.originalLibraryFile._id).catch(function (err) {
-                        args.jobLog('falling back');
-                        (0, child_process_1.exec)("del ".concat(args.originalLibraryFile._id), function (err) {
-                            if (err) {
-                                args.jobLog('There was an error:');
-                                throw err;
-                            }
-                            else {
-                                args.jobLog('File was deleted successfully');
-                            }
-                        });
-                    })];
+                return [4 /*yield*/, fs_1.promises.unlink(args.originalLibraryFile._id)];
             case 3:
                 _a.sent();
                 _a.label = 4;

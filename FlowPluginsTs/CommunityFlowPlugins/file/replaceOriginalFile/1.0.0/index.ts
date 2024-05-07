@@ -1,4 +1,3 @@
-import { exec } from 'child_process';
 import fileMoveOrCopy from '../../../../FlowHelpers/1.0.0/fileMoveOrCopy';
 import {
   getContainer, getFileAbosluteDir, getFileName,
@@ -81,18 +80,7 @@ const plugin = async (args: IpluginInputArgs): Promise<IpluginOutputArgs> => {
     && args.originalLibraryFile._id !== currentPath
   ) {
     args.jobLog(`Deleting original file: ${args.originalLibraryFile._id}`);
-    try {
-      fs.unlinkSync(args.originalLibraryFile._id);
-    } catch (e) {
-      exec(`del ${args.originalLibraryFile._id}`, (err) => {
-        if (err) {
-          args.jobLog('There was an error:');
-          throw err
-        } else {
-            args.jobLog('File was deleted successfully');
-        }
-      });
-    }
+    fs.unlinkSync(args.originalLibraryFile._id);
   }
 
   await new Promise((resolve) => setTimeout(resolve, 2000));
