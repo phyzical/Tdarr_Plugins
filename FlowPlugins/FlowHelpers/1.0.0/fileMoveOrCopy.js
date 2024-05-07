@@ -245,6 +245,7 @@ var fileMoveOrCopy = function (_a) { return __awaiter(void 0, [_a], void 0, func
         switch (_c.label) {
             case 0:
                 if (!(operation === 'move')) return [3 /*break*/, 2];
+                args.jobLog('Looking for a previous .tmp file');
                 return [4 /*yield*/, getSizeBytes(destinationPath)];
             case 1:
                 // add logic to check if a previous move worked i.e theres a .tmp still for processing

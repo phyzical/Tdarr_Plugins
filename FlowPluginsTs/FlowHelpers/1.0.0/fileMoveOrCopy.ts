@@ -204,6 +204,8 @@ const fileMoveOrCopy = async ({
     args: IpluginInputArgs,
 }):Promise<boolean> => {
   if (operation === 'move') {
+    args.jobLog('Looking for a previous .tmp file');
+
     // add logic to check if a previous move worked i.e theres a .tmp still for processing
     if (await getSizeBytes(destinationPath) > 0) {
       args.jobLog('Found a previous .tmp file, skipping move/copy');
