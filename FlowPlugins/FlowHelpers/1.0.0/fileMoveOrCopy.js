@@ -309,12 +309,15 @@ var fileMoveOrCopy = function (_a) { return __awaiter(void 0, [_a], void 0, func
                 _c.sent();
                 _c.label = 10;
             case 10: return [2 /*return*/, true];
-            case 11: return [4 /*yield*/, getSizeBytes(destinationPath)];
+            case 11:
+                if (!(operation === 'move')) return [3 /*break*/, 13];
+                return [4 /*yield*/, getSizeBytes(destinationPath)];
             case 12:
-                // add logic to check if a previous copy/move worked i.e theres a .tmp still for processing
+                // add logic to check if a previous move worked i.e theres a .tmp still for processing
                 if ((_c.sent()) > 0)
                     return [2 /*return*/, true];
-                throw new Error("Failed to ".concat(operation, " file"));
+                _c.label = 13;
+            case 13: throw new Error("Failed to ".concat(operation, " file"));
         }
     });
 }); };
