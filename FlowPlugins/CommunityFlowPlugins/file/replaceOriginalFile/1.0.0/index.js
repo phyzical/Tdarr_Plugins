@@ -109,7 +109,7 @@ var plugin = function (args) { return __awaiter(void 0, void 0, void 0, function
                 // delete original file
                 if (fs.existsSync(args.originalLibraryFile._id)
                     && args.originalLibraryFile._id !== currentPath) {
-                    args.jobLog("Deleting original file:".concat(args.originalLibraryFile._id));
+                    args.jobLog("Deleting original file: ".concat(args.originalLibraryFile._id));
                     fs.unlinkSync(args.originalLibraryFile._id);
                 }
                 return [4 /*yield*/, new Promise(function (resolve) { return setTimeout(resolve, 2000); })];

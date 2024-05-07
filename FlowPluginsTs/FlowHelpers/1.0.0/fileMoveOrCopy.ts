@@ -271,6 +271,10 @@ const fileMoveOrCopy = async ({
     return true;
   }
 
+  // add logic to check if a previous copy/move worked i.e theres a .tmp still for processing
+  if (await getSizeBytes(destinationPath) > 0)
+    return true;
+
   throw new Error(`Failed to ${operation} file`);
 };
 

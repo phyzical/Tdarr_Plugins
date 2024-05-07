@@ -79,7 +79,7 @@ const plugin = async (args: IpluginInputArgs): Promise<IpluginOutputArgs> => {
     fs.existsSync(args.originalLibraryFile._id)
     && args.originalLibraryFile._id !== currentPath
   ) {
-    args.jobLog(`Deleting original file:${args.originalLibraryFile._id}`);
+    args.jobLog(`Deleting original file: ${args.originalLibraryFile._id}`);
     fs.unlinkSync(args.originalLibraryFile._id);
   }
 
