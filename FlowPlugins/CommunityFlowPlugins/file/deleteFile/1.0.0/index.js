@@ -35,15 +35,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.plugin = exports.details = void 0;
 var fs_1 = require("fs");
 var fileUtils_1 = require("../../../../FlowHelpers/1.0.0/fileUtils");
 var child_process_1 = require("child_process");
-var os_1 = __importDefault(require("os"));
 /* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] */
 var details = function () { return ({
     name: 'Delete File',
@@ -112,20 +108,16 @@ var plugin = function (args) { return __awaiter(void 0, void 0, void 0, function
                 if (!(fileToDelete === 'originalFile')) return [3 /*break*/, 4];
                 args.jobLog("Deleting original file ".concat(args.originalLibraryFile._id));
                 return [4 /*yield*/, fs_1.promises.unlink(args.originalLibraryFile._id).catch(function (err) {
-                        if (os_1.default.platform() === 'win32') {
-                            (0, child_process_1.exec)("del ".concat(args.originalLibraryFile._id), function (err) {
-                                if (err) {
-                                    args.jobLog('There was an error:');
-                                    throw err;
-                                }
-                                else {
-                                    args.jobLog('File was deleted successfully');
-                                }
-                            });
-                        }
-                        else {
-                            throw err;
-                        }
+                        args.jobLog('falling back');
+                        (0, child_process_1.exec)("del ".concat(args.originalLibraryFile._id), function (err) {
+                            if (err) {
+                                args.jobLog('There was an error:');
+                                throw err;
+                            }
+                            else {
+                                args.jobLog('File was deleted successfully');
+                            }
+                        });
                     })];
             case 3:
                 _a.sent();
